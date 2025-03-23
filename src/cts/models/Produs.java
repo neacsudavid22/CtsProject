@@ -20,16 +20,8 @@ public class Produs {
         return count;
     }
 
-    public static void setCount(int count) {
-        Produs.count = count;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public double getCost() {
