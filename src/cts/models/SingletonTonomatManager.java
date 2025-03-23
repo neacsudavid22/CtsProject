@@ -5,10 +5,10 @@ import java.util.List;
 
 public class SingletonTonomatManager {
     private static SingletonTonomatManager instance = null;
-    private List<Tonomat> tonomate;
+    private List<Tonomat> listaTonomate;
 
     private SingletonTonomatManager() {
-        this.tonomate = new ArrayList<>();
+        this.listaTonomate = new ArrayList<>();
     }
 
     public static synchronized SingletonTonomatManager getInstance() {
@@ -19,6 +19,6 @@ public class SingletonTonomatManager {
     }
 
     public List<Tonomat> getTonomate() {
-        return this.tonomate;
+        return this.listaTonomate;
     }
 }
