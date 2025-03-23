@@ -1,4 +1,6 @@
-package cts.models;
+package cts.controllers;
+
+import cts.models.Tonomat;
 
 import java.util.ArrayList;
 import java.util.List;
