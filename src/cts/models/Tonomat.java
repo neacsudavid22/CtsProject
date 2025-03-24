@@ -6,17 +6,13 @@ public class Tonomat {
     Compartiment compartiment;
     double sold;
     String locatie;
-    private static SingletonContBancar contFirma;
+    public static SingletonContBancar contFirma = SingletonContBancar.getInstance();
 
     public Tonomat(Compartiment compartiment, double sold, String locatie) {
         this.id = count++;
         this.compartiment = compartiment;
         this.sold = sold;
         this.locatie = locatie;
-    }
-
-    public static SingletonContBancar getContFirma() {
-        return contFirma;
     }
 
     public static int getCount() {
