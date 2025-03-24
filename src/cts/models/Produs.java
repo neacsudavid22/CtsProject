@@ -7,6 +7,7 @@ public class Produs {
     private int id;
     private double cost;
     private String nume;
+    private String furnizor;
     private TipProdus tip;
 
     public Produs(double cost, String nume, TipProdus tip) {
@@ -14,6 +15,13 @@ public class Produs {
         this.cost = cost;
         this.nume = nume;
         this.tip = tip;
+    }
+    public String getFurnizor() {
+        return furnizor;
+    }
+
+    public void setFurnizor(String furnizor) {
+        this.furnizor = furnizor;
     }
 
     public static int getCount() {
@@ -54,6 +62,7 @@ public class Produs {
                 "id=" + id +
                 ", cost=" + cost +
                 ", nume='" + nume + '\'' +
+                ", furnizor='" + furnizor + '\'' +
                 ", tip=" + tip +
                 '}';
     }
