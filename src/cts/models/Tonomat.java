@@ -35,10 +35,6 @@ public class Tonomat {
         return sold;
     }
 
-    public void setSold(double sold) {
-        this.sold = sold;
-    }
-
     public String getLocatie() {
         return locatie;
     }

@@ -40,12 +40,9 @@ public class SingletonTonomatManager implements ISingletonTonomatManager {
     }
 
     @Override
-    public void listeazaToateProdusele(){
+    public void listezaTonomatele(){
         for(Tonomat tonomat : listaTonomate){
-            List<Produs> listaProduse = tonomat.getCompartiment().getListaProduse();
-            for(Produs produs : listaProduse){
-                produs.toString();
-            }
+            System.out.println(tonomat.toString());
         }
     }
 
@@ -57,5 +54,10 @@ public class SingletonTonomatManager implements ISingletonTonomatManager {
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void declanseazaCLI(){
+        //TO-DO
     }
 }

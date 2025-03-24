@@ -22,7 +22,10 @@ public class Main {
         Tonomat tonomat = tonomatManager.selectezaTonomat(0);
 
         System.out.println(tonomat.toString());
+
         ContBancar contFirma = Tonomat.contFirma.getContBancar();
         System.out.println(contFirma.toString());
+
+        tonomatManager.listezaTonomatele();
     }
 }
