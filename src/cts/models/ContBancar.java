@@ -56,7 +56,7 @@ public class ContBancar implements IContBancar {
             this.sold -= cost;
             return true;
         }
-        else System.out.println("Sold insuficient, nu s- a putut efectua plata");
+        System.out.println("Sold insuficient, nu s-a putut efectua plata");
         return false;
     }
 
