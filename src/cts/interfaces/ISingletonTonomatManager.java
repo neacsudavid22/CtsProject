@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ISingletonTonomatManager {
     public Tonomat selectezaTonomat(int id);
-    public void listeazaToateProdusele();
+    public void listezaTonomatele();
     public void creazaTonomat(Compartiment compartiment, double sold, String locatie);
+    public void declanseazaCLI();
 }
