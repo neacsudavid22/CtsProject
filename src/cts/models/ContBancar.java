@@ -1,8 +1,9 @@
 package cts.models;
 
 import cts.enums.TipCardBancar;
+import cts.interfaces.IContBancar;
 
-public class ContBancar {
+public class ContBancar implements IContBancar {
     private static int count = 0;
     private int id;
     private String nume;
@@ -47,6 +48,25 @@ public class ContBancar {
 
     public void setTip(TipCardBancar tip) {
         this.tip = tip;
+    }
+
+    @Override
+    public Boolean platesteProdus(double cost) {
+        if (this.sold >= cost) {
+            this.sold -= cost;
+            return true;
+        }
+        else System.out.println("Sold insuficient, nu s- a putut efectua plata");
+        return false;
+    }
+
+    @Override
+    public Boolean colectareSuma(double suma) {
+        if (suma > 0) {
+            this.sold += suma;
+            return true;
+        }
+        return false;
     }
 
     @Override
