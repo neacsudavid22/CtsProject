@@ -59,6 +59,22 @@ public class Compartiment implements ICompartiment {
     public void elimina(int id) {
         this.listaProduse.remove(id);
     }
+    @Override
+    public Produs getProdusById(int id){
+        return this.listaProduse.get(id);
+    }
+
+    @Override
+    public double getCostProdus(int id){
+        try{
+            Produs produs = this.getProdusById(id);
+            return produs.getCost();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
 
     @Override
     public boolean verificaTip(Produs produs) {
