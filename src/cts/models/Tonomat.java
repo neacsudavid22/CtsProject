@@ -1,6 +1,8 @@
 package cts.models;
 
-public class Tonomat {
+import cts.interfaces.ITonomat;
+
+public class Tonomat implements ITonomat {
     private static int count = 0;
     int id;
     Compartiment compartiment;
@@ -41,6 +43,47 @@ public class Tonomat {
 
     public void setLocatie(String locatie) {
         this.locatie = locatie;
+    }
+
+    @Override
+    public void adaugaProdus(Produs produs) {
+        this.compartiment.adauga(produs);
+    }
+
+    @Override
+    public void eliminaProdus(int idProdus) {
+        this.compartiment.elimina(idProdus);
+    }
+
+    @Override
+    public void vindeProdus(int idProdus, ContBancar contBancar) {
+
+
+    }
+
+    @Override
+    public void primirePlata(ContBancar contBancar, double cost) {
+        if (contBancar.platesteProdus(cost)) {
+            contFirma.colectareSuma(cost);
+            System.out.println("Plată efectuată cu succes.");
+        } else {
+            System.out.println("Fonduri insuficiente.");
+        }
+    }
+
+    @Override
+    public void mutaProdus(int idProdus, Tonomat tonomat) {
+
+    }
+
+    @Override
+    public void filtrareProduseDupaFurnizor(String furnizor) {
+        this.compartiment.filtreazaProduseleDupaFurnizor(furnizor);
+    }
+
+    @Override
+    public void listareProduse() {
+        this.compartiment.listeaza();
     }
 
     @Override
