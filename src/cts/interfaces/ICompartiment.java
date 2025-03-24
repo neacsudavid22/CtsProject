@@ -9,5 +9,5 @@ public interface ICompartiment {
     void elimina(int id);
     boolean verificaTip(Produs produs);
     void listeaza();
-    //TO-DO void filtreaza()
+    void filtreazaProduseleDupaFurnizor(String furnizor);
 }
