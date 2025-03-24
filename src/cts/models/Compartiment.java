@@ -78,13 +78,16 @@ public class Compartiment implements ICompartiment {
 
     @Override
     public void listeaza() {
-
+        for (Produs produs : this.listaProduse) {
+            System.out.println(produs.toString());
+        }
     }
 
     @Override
     public void filtreazaProduseleDupaFurnizor(String furnizor) {
-
+        for (Produs produs : this.listaProduse) {
+            if (furnizor.equals(produs.getFurnizor()))
+                System.out.println(produs.toString());
+        }
     }
-
-
 }
