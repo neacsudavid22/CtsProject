@@ -1,11 +1,14 @@
 package cts.controllers;
 
+import cts.interfaces.ISingletonTonomatManager;
+import cts.models.Compartiment;
+import cts.models.Produs;
 import cts.models.Tonomat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingletonTonomatManager {
+public class SingletonTonomatManager implements ISingletonTonomatManager {
     private static SingletonTonomatManager instance = null;
     private List<Tonomat> listaTonomate;
 
@@ -22,5 +25,37 @@ public class SingletonTonomatManager {
 
     public List<Tonomat> getTonomate() {
         return this.listaTonomate;
+    }
+
+    @Override
+    public Tonomat selectezaTonomat(int id) {
+        try{
+            Tonomat tonomatCurent = listaTonomate.get(id);
+            return tonomatCurent;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public void listeazaToateProdusele(){
+        for(Tonomat tonomat : listaTonomate){
+            List<Produs> listaProduse = tonomat.getCompartiment().getListaProduse();
+            for(Produs produs : listaProduse){
+                produs.toString();
+            }
+        }
+    }
+
+    @Override
+    public void creazaTonomat(Compartiment compartiment, double sold, String locatie){
+        try{
+            Tonomat tonomatNou = new Tonomat(compartiment, sold, locatie);
+            listaTonomate.add(tonomatNou);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
