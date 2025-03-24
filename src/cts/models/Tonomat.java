@@ -4,10 +4,10 @@ import cts.interfaces.ITonomat;
 
 public class Tonomat implements ITonomat {
     private static int count = 0;
-    int id;
-    Compartiment compartiment;
-    double sold;
-    String locatie;
+    private int id;
+    private Compartiment compartiment;
+    private double sold;
+    private String locatie;
     public static SingletonContBancar contFirma = SingletonContBancar.getInstance();
 
     public Tonomat(Compartiment compartiment, double sold, String locatie) {
@@ -57,23 +57,36 @@ public class Tonomat implements ITonomat {
 
     @Override
     public void vindeProdus(int idProdus, ContBancar contBancar) {
-
-
+        if(this.primirePlata(contBancar, this.compartiment.getCostProdus(idProdus))) {
+            this.eliminaProdus(idProdus);
+        }
+        else System.out.println("Produsul nu a putut fi eliminat din Tonomat");
     }
 
     @Override
-    public void primirePlata(ContBancar contBancar, double cost) {
+    public boolean primirePlata(ContBancar contBancar, double cost) {
+        if(cost <= 0){
+            System.out.println("Probleme la furnizarea costului produsului.");
+            return false;
+        }
         if (contBancar.platesteProdus(cost)) {
             contFirma.colectareSuma(cost);
             System.out.println("Plată efectuată cu succes.");
-        } else {
-            System.out.println("Fonduri insuficiente.");
+            return true;
         }
+        System.out.println("Fonduri insuficiente.");
+        return false;
     }
 
     @Override
     public void mutaProdus(int idProdus, Tonomat tonomat) {
-
+        try{
+            Produs produsMutat = this.compartiment.getProdusById(idProdus);
+            this.eliminaProdus(idProdus);
+            tonomat.adaugaProdus(produsMutat);
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
