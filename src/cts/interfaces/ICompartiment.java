@@ -10,4 +10,5 @@ public interface ICompartiment {
     boolean verificaTip(Produs produs);
     void listeaza();
     void filtreazaProduseleDupaFurnizor(String furnizor);
+    boolean verificaCapacitate();
 }

@@ -1,10 +1,12 @@
 package cts.models;
 
 import cts.enums.TipCompartiment;
+import cts.enums.TipProdus;
+import cts.interfaces.ICompartiment;
 
 import java.util.List;
 
-public class Compartiment {
+public class Compartiment implements ICompartiment {
     List<Produs> listaProduse;
     int capacitate;
     TipCompartiment tip;
@@ -47,4 +49,42 @@ public class Compartiment {
                 ", tip=" + tip +
                 '}';
     }
+
+    @Override
+    public void adauga(Produs produs) {
+        this.listaProduse.add(produs);
+    }
+
+    @Override
+    public void elimina(int id) {
+        this.listaProduse.remove(id);
+    }
+
+    @Override
+    public boolean verificaTip(Produs produs) {
+        if (produs.getTip() == TipProdus.idc)
+            return true;
+        if (produs.getTip() == TipProdus.cald && this.getTip() == TipCompartiment.produseCalde)
+            return true;
+        if (produs.getTip() == TipProdus.rece && this.getTip() == TipCompartiment.produseReci)
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean verificaCapacitate() {
+        return listaProduse.size() < this.capacitate;
+    }
+
+    @Override
+    public void listeaza() {
+
+    }
+
+    @Override
+    public void filtreazaProduseleDupaFurnizor(String furnizor) {
+
+    }
+
+
 }
