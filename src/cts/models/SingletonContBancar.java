@@ -1,8 +1,9 @@
 package cts.models;
 
 import cts.enums.TipCardBancar;
+import cts.interfaces.ISingletonContBancar;
 
-public class SingletonContBancar {
+public class SingletonContBancar implements ISingletonContBancar {
     private static SingletonContBancar instance = null;
     private ContBancar contBancar;
 
@@ -16,7 +17,7 @@ public class SingletonContBancar {
         }
         return instance;
     }
-
+    @Override
     public ContBancar getContBancar() {
         return contBancar;
     }
