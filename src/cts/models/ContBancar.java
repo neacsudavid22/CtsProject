@@ -1,6 +1,7 @@
 package cts.models;
 
 import cts.enums.TipCardBancar;
+import cts.exceptions.SoldInsuficientException;
 import cts.interfaces.IContBancar;
 
 public class ContBancar implements IContBancar {
@@ -56,9 +57,22 @@ public class ContBancar implements IContBancar {
             this.sold -= cost;
             return true;
         }
-        System.out.println("Sold insuficient, nu s-a putut efectua plata");
-        return false;
+        try {
+            throw new SoldInsuficientException();
+        } catch (SoldInsuficientException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+        //@Override
+        //public Boolean platesteProdus(double cost) {
+        //if (this.sold >= cost) {
+        //this.sold -= cost;
+        //return true;
+        //}
+        //System.out.println("Sold insuficient, nu s-a putut efectua plata.");
+        //return false;
+        //}
 
     @Override
     public Boolean colectareSuma(double suma) {
