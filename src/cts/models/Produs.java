@@ -4,18 +4,20 @@ import cts.enums.TipProdus;
 
 public class Produs {
     private static int count = 0;
-    private int id;
+    private final int id;
     private double cost;
     private String nume;
     private String furnizor;
     private TipProdus tip;
 
-    public Produs(double cost, String nume, TipProdus tip) {
+    public Produs(double cost, String nume, String furnizor, TipProdus tip) {
         this.id = count++;
         this.cost = cost;
         this.nume = nume;
+        this.furnizor = furnizor;
         this.tip = tip;
     }
+
     public String getFurnizor() {
         return furnizor;
     }
