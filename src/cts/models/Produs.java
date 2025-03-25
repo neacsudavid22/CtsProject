@@ -60,12 +60,10 @@ public class Produs {
 
     @Override
     public String toString() {
-        return "Produs{" +
-                "id=" + id +
-                ", cost=" + cost +
-                ", nume='" + nume + '\'' +
-                ", furnizor='" + furnizor + '\'' +
-                ", tip=" + tip +
-                '}';
+        return "id: " + id +
+                ", cost: " + cost +
+                ", nume: '" + nume +
+                ", furnizor: '" + furnizor +
+                ", ti: " + tip + "\n";
     }
 }

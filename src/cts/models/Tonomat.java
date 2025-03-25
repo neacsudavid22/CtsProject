@@ -101,11 +101,7 @@ public class Tonomat implements ITonomat {
 
     @Override
     public String toString() {
-        return "Tonomat{" +
-                "id=" + id +
-                ", compartiment=" + compartiment +
-                ", sold=" + sold +
-                ", locatie='" + locatie + '\'' +
-                '}';
+        return "id: " + id +
+                ", locatie: " + locatie + "\n";
     }
 }
