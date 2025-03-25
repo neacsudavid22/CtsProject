@@ -1,7 +1,6 @@
 package cts.controllers;
 
 import cts.enums.TipProdus;
-import cts.interfaces.ISingletonCLI;
 import cts.models.Compartiment;
 import cts.models.Produs;
 import cts.models.Tonomat;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SingletonCLI implements ISingletonCLI {
+public class SingletonCLI {
     private static SingletonCLI instance = null;
     private List<Tonomat> listaTonomate;
 
@@ -81,7 +80,7 @@ public class SingletonCLI implements ISingletonCLI {
                     break;
                 }
             }
-        } while (raspuns <= 0 || raspuns > 2);
+        } while (raspuns != 2);
     }
 
     public void clientCLI(Scanner scanner) {
@@ -116,17 +115,18 @@ public class SingletonCLI implements ISingletonCLI {
                     break;
                 }
             }
-        } while (raspuns <= 0 || raspuns > 2);
+        } while (raspuns != 2);
     }
 
     public void administreazaTonomat(Tonomat tonomatCurent, Scanner scanner) {
-        System.out.println("Pentru a adauga un produs apasa 1");
-        System.out.println("Pentru a muta un produs apasa 2");
-        System.out.println("Pentru a lista produsele din tonomat apasa 3");
-        System.out.println("Pentru a filtra produsele din tonomat dupa furnizor apasa 5");
-
         int raspuns = 0;
         do {
+            System.out.println("Pentru a adauga un produs apasa 1");
+            System.out.println("Pentru a muta un produs apasa 2");
+            System.out.println("Pentru a lista produsele din tonomat apasa 3");
+            System.out.println("Pentru a filtra produsele din tonomat dupa furnizor apasa 4");
+            System.out.println("Pentru a te intoarce inapoi apasa 5");
+
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
                 scanner.next();
@@ -136,11 +136,22 @@ public class SingletonCLI implements ISingletonCLI {
             switch (raspuns) {
                 case 1: {
                     Produs produsDeAdaugat = this.creazaProdusNou(scanner);
-                    tonomatCurent.adaugaProdus(produsDeAdaugat);
-                    System.out.println("Produsul a fost adaugat!");
+                    boolean rezultat = tonomatCurent.adaugaProdus(produsDeAdaugat);
+                    if(rezultat) System.out.println("Produsul a fost adaugat!");
+                    else  System.out.println("Produsul nu a putut fi adaugat!");
                     break;
                 }
                 case 2: {
+                    if(this.listaTonomate.size() < 2){
+                        System.out.println("Ai doar un tonomat..");
+                        break;
+                    }
+
+                    if(tonomatCurent.getCompartiment().getListaProduse().size() < 0){
+                        System.out.println("Nu ai produse in tonomatul curent, nu poti muta din el nimic..");
+                        break;
+                    }
+
                     Tonomat tonomatPentruMutat = this.selecteazaTonomat(scanner);
 
                     int idProdusDeMutat = this.selecteazaProdus(scanner, tonomatCurent);
@@ -155,14 +166,26 @@ public class SingletonCLI implements ISingletonCLI {
                     break;
                 }
                 case 4: {
-                    //TO-DO: tonomatCurent.filtrareProduseDupaFurnizor();
+                    this.filtreazaProdusele(scanner, tonomatCurent);
+                    break;
+                }
+                case 5: {
+                    System.out.println("Am iesit!");
+                    break;
                 }
                 default: {
                     System.out.println("Alege o optiune valida!");
                     break;
                 }
             }
-        } while(raspuns <= 0 || raspuns > 5);
+        } while(raspuns != 5);
+    }
+    public void filtreazaProdusele(Scanner scanner, Tonomat tonomat){
+        System.out.println("Introdu furnizorul: ");
+        String furnizor = scanner.next();
+        System.out.println("Lista Produse a caror furnizor sunt " + furnizor + ":");
+        tonomat.filtrareProduseDupaFurnizor(furnizor);
+        System.out.println();
     }
     public int selecteazaProdus(Scanner scanner, Tonomat tonomatCurent){
         System.out.println("Alege produsul pe care doresti sa il muti");

@@ -64,6 +64,6 @@ public class Produs {
                 ", cost: " + cost +
                 ", nume: '" + nume +
                 ", furnizor: '" + furnizor +
-                ", ti: " + tip + "\n";
+                ", tip: " + tip + "\n";
     }
 }

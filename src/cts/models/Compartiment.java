@@ -2,6 +2,7 @@ package cts.models;
 
 import cts.enums.TipCompartiment;
 import cts.enums.TipProdus;
+import cts.exceptions.CompartimentPlinException;
 import cts.interfaces.ICompartiment;
 
 import java.util.List;
@@ -51,18 +52,18 @@ public class Compartiment implements ICompartiment {
     }
 
     @Override
-    public void adauga(Produs produs) {
-        this.listaProduse.add(produs);
+    public boolean adauga(Produs produs) {
+        if (this.listaProduse.size() >= this.capacitate) {
+            System.out.println("Capacitate depasita!");
+        }
+        else if(!this.verificaTip(produs))
+            System.out.println("Acest tonomat primeste doar " + this.getTip());
+        else {
+            this.listaProduse.add(produs);
+            return true;
+        }
+        return false;
     }
-
-    //Alternativa adauga produs + verificare spatiu
-    //@Override
-    //public void adauga(Produs produs) throws CompartimentPlinException {
-    //if (this.listaProduse.size() >= this.capacitate) {
-            //throw new CompartimentPlinException();
-        //}
-        //this.listaProduse.add(produs);
-    //}
 
     @Override
     public void elimina(int id) {
