@@ -55,6 +55,15 @@ public class Compartiment implements ICompartiment {
         this.listaProduse.add(produs);
     }
 
+    //Alternativa adauga produs + verificare spatiu
+    //@Override
+    //public void adauga(Produs produs) throws CompartimentPlinException {
+    //if (this.listaProduse.size() >= this.capacitate) {
+            //throw new CompartimentPlinException();
+        //}
+        //this.listaProduse.add(produs);
+    //}
+
     @Override
     public void elimina(int id) {
         this.listaProduse.remove(id);
@@ -106,4 +115,7 @@ public class Compartiment implements ICompartiment {
                 System.out.println(produs.toString());
         }
     }
+
+
+
 }
