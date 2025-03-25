@@ -46,8 +46,8 @@ public class Tonomat implements ITonomat {
     }
 
     @Override
-    public void adaugaProdus(Produs produs) {
-        this.compartiment.adauga(produs);
+    public boolean adaugaProdus(Produs produs) {
+        return this.compartiment.adauga(produs);
     }
 
     @Override
