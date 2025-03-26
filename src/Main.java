@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        SingletonCLI tonomatManager = SingletonCLI.getInstance();
+        SingletonCLI CLI = SingletonCLI.getInstance();
         Produs produs1 = new Produs(100, "coca cola", "Coca cola srl", TipProdus.rece);
         Produs produs2 = new Produs(90, "pepsi cola","pepsi cola srl", TipProdus.rece);
         Produs produs3 = new Produs(50, "idc","Coca cola srl", TipProdus.idc);
@@ -16,7 +16,7 @@ public class Main {
         listaProduse.add(produs1); listaProduse.add(produs2); listaProduse.add(produs3);
 
         Compartiment compartiment = new Compartiment(listaProduse, 4, TipCompartiment.produseReci);
-        tonomatManager.creazaTonomat(compartiment, 1000, "Bucuresti");
+        CLI.creazaTonomat(compartiment, 1000, "Bucuresti");
 
         Produs produs4 = new Produs(100, "ceai de tei", "Coca cola srl", TipProdus.cald);
         Produs produs5 = new Produs(90, "ceai de musetel","pepsi cola srl", TipProdus.cald);
@@ -25,8 +25,8 @@ public class Main {
         listaProduse2.add(produs4); listaProduse2.add(produs5); listaProduse2.add(produs6);
 
         Compartiment compartiment2 = new Compartiment(listaProduse2, 5, TipCompartiment.produseCalde);
-        tonomatManager.creazaTonomat(compartiment2, 1000, "Valcea");
+        CLI.creazaTonomat(compartiment2, 1000, "Valcea");
 
-        tonomatManager.declanseazaCLI();
+        CLI.declanseazaCLI();
     }
 }
