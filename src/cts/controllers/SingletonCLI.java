@@ -1,9 +1,7 @@
 package cts.controllers;
 
 import cts.enums.TipProdus;
-import cts.models.Compartiment;
-import cts.models.Produs;
-import cts.models.Tonomat;
+import cts.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +10,11 @@ import java.util.Scanner;
 public class SingletonCLI {
     private static SingletonCLI instance = null;
     private List<Tonomat> listaTonomate;
+    private Banca banca;
 
     private SingletonCLI() {
         this.listaTonomate = new ArrayList<>();
+        this.banca = new Banca();
     }
 
     public static synchronized SingletonCLI getInstance() {
@@ -24,14 +24,9 @@ public class SingletonCLI {
         return instance;
     }
 
-    public List<Tonomat> getTonomate() {
-        return this.listaTonomate;
-    }
-
     public Tonomat getTonomatById(int id) {
         try {
-            Tonomat tonomatCurent = listaTonomate.get(id);
-            return tonomatCurent;
+            return listaTonomate.get(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -56,39 +51,28 @@ public class SingletonCLI {
 
     public void declanseazaCLI() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Pentru client apasa 1");
-        System.out.println("Pentru administrator apasa 2");
-        int raspuns = 0;
+        int raspuns;
         do {
+            System.out.println("Pentru client apasa 1");
+            System.out.println("Pentru administrator apasa 2");
+            System.out.println("Pentru a parasi aplicatia apasa 3");
+
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
                 scanner.next();
             }
             raspuns = scanner.nextInt();
 
-            switch (raspuns) {
-                case 1: {
-                    this.clientCLI(scanner);
-                    break;
-                }
-                case 2: {
-                    this.managerCLI(scanner);
-                    break;
-                }
-                default: {
-                    System.out.println("Introdu un numar dintre optiuni");
-                    break;
-                }
-            }
-        } while (raspuns != 2);
+            if (raspuns == 1 || raspuns == 2)
+                this.lanseazaMeniu(scanner, Boolean.parseBoolean(Integer.toString(raspuns-1)));
+            else if(raspuns != 3)
+                System.out.println("Introdu un numar dintre optiunile disponibile");
+
+        } while (raspuns != 3);
     }
 
-    public void clientCLI(Scanner scanner) {
-
-    }
-
-    public void managerCLI(Scanner scanner) {
-        int raspuns = 0;
+    public void lanseazaMeniu(Scanner scanner, boolean ESTE_MANAGER) {
+        int raspuns;
         do {
             System.out.println("Pentru a selecta un tonomat apasa 1");
             System.out.println("Pentru a te intoarce inapoi apasa 2");
@@ -104,7 +88,10 @@ public class SingletonCLI {
                 case 1: {
                     System.out.println("Selecteaza tonomatul, apasa id-ul acestuia:");
                     Tonomat tonomatCurent = this.selecteazaTonomat(scanner);
-                    this.administreazaTonomat(tonomatCurent, scanner);
+                    if(ESTE_MANAGER)
+                        this.administreazaTonomat(tonomatCurent, scanner);
+                    else
+                        this.cumparaProdus(tonomatCurent, scanner);
                 }
                 case 2: {
                     System.out.println("EXIT");
@@ -117,9 +104,64 @@ public class SingletonCLI {
             }
         } while (raspuns != 2);
     }
+    public void cumparaProdus(Tonomat tonomatCurent, Scanner scanner) {
+        int raspuns;
+        do{
+            int idProdusSelectat = this.selecteazaProdus(scanner, tonomatCurent);
+            Produs produsSelectat = tonomatCurent.getCompartiment().getProdusById(idProdusSelectat);
+            ContBancar contClient = this.selecteazaContBancar(scanner);
+            tonomatCurent.primirePlata(contClient, produsSelectat.getCost());
+
+            System.out.println("Vrei sa continui cumparaturile?");
+            System.out.println("DA - Apasa 1");
+            System.out.println("NU - Apasa alt NUMAR");
+            while(!scanner.hasNextInt()){
+                System.out.println("Invalid input!");
+                scanner.next();
+            }
+            raspuns = scanner.nextInt();
+        } while(raspuns == 1);
+    }
+
+    public ContBancar selecteazaContBancar(Scanner scanner){
+        int raspuns;
+        do{
+            System.out.println("Pentru a folosi un cont existent apasa - 1");
+            System.out.println("Pentru a crea un cont nou apasa contacteaza banca apasand - 2");
+            System.out.println("Pentru a renunta la achizitie apasa - 3");
+
+            while(!scanner.hasNextInt()){
+                System.out.println("Selecteaza un numar valid!");
+                scanner.next();
+            }
+
+            raspuns = scanner.nextInt();
+
+            switch (raspuns) {
+                case 1 : {
+                    return this.banca.getContBancar(scanner);
+                }
+                case 2: {
+                    ContBancar contBancar = this.banca.creazaContBancar(scanner);
+                    if(contBancar != null)
+                        return contBancar;
+                    System.out.println("Datele introduse au fost incorecte!");
+                    break;
+                }
+                case 3: {
+                    return null;
+                }
+                default: {
+                    System.out.println("Alege un nr valid");
+                    break;
+                }
+            }
+        } while(raspuns < 0 || raspuns > 3);
+        return null;
+    }
 
     public void administreazaTonomat(Tonomat tonomatCurent, Scanner scanner) {
-        int raspuns = 0;
+        int raspuns;
         do {
             System.out.println("Pentru a adauga un produs apasa 1");
             System.out.println("Pentru a muta un produs apasa 2");
@@ -147,7 +189,7 @@ public class SingletonCLI {
                         break;
                     }
 
-                    if(tonomatCurent.getCompartiment().getListaProduse().size() < 0){
+                    if(tonomatCurent.getCompartiment().getListaProduse().isEmpty()){
                         System.out.println("Nu ai produse in tonomatul curent, nu poti muta din el nimic..");
                         break;
                     }
@@ -188,9 +230,9 @@ public class SingletonCLI {
         System.out.println();
     }
     public int selecteazaProdus(Scanner scanner, Tonomat tonomatCurent){
-        System.out.println("Alege produsul pe care doresti sa il muti");
+        System.out.println("Alege produsul");
         tonomatCurent.listareProduse();
-        int idProdus = -1;
+        int idProdus;
         boolean AI_ALES_UN_NR_VALID;
         do {
             AI_ALES_UN_NR_VALID = false;
@@ -199,6 +241,7 @@ public class SingletonCLI {
                 System.out.println("Invalid input! Please enter a number.");
                 scanner.next();
             }
+            idProdus = scanner.nextInt();
             if(idProdus >= 0 && idProdus < tonomatCurent.getCompartiment().getListaProduse().size()) {
                 AI_ALES_UN_NR_VALID = true;
             }
@@ -212,7 +255,7 @@ public class SingletonCLI {
 
     public Tonomat selecteazaTonomat(Scanner scanner){
         System.out.println("Selecteaza tonomatul:");
-        int idTonomat = -1;
+        int idTonomat;
         boolean AI_ALES_UN_NR_VALID;
         do {
             AI_ALES_UN_NR_VALID = false;
@@ -235,47 +278,45 @@ public class SingletonCLI {
     }
 
     public Produs creazaProdusNou(Scanner scanner) {
-        do {
-            System.out.println("Introdu denumire Produs: ");
-            String nume = scanner.next();
+        System.out.println("Introdu denumire Produs: ");
+        String nume = scanner.next();
 
-            System.out.println("Introdu cost produs: ");
-            while(!scanner.hasNextDouble()){
-                System.out.println("Introdu input valid!");
+        System.out.println("Introdu cost produs: ");
+        while(!scanner.hasNextDouble()){
+            System.out.println("Introdu input valid!");
+            scanner.next();
+        }
+        double cost = scanner.nextDouble();
+
+        System.out.println("Introdu furnizor");
+        String furnizor = scanner.next();
+
+        int optiuneTip;
+        boolean AI_ALES_UN_NR_VALID;
+        do {
+            AI_ALES_UN_NR_VALID = false;
+            System.out.println("Alege tipul produsului:");
+            System.out.println("1 - rece");
+            System.out.println("2 - cald");
+            System.out.println("3 - idc/oricare");
+
+            while (!scanner.hasNextInt()) {
+                System.out.println("Introdu un numar valid!");
                 scanner.next();
             }
-            double cost = scanner.nextDouble();
+            optiuneTip = scanner.nextInt();
 
-            System.out.println("Introdu furnizor");
-            String furnizor = scanner.next();
+            if(optiuneTip == 1 || optiuneTip == 2 || optiuneTip == 3) {
+                AI_ALES_UN_NR_VALID = true;
+            }
+            else{
+                System.out.println("Trebuie sa alegi un numar dintre optiunile listate!");
+            }
 
-            int optiuneTip = -1;
-            boolean AI_ALES_UN_NR_VALID;
-            do {
-                AI_ALES_UN_NR_VALID = false;
-                System.out.println("Alege tipul produsului:");
-                System.out.println("1 - rece");
-                System.out.println("2 - cald");
-                System.out.println("3 - idc/oricare");
+        } while (!AI_ALES_UN_NR_VALID);
 
-                while (!scanner.hasNextInt()) {
-                    System.out.println("Introdu un numar valid!");
-                    scanner.next();
-                }
-                optiuneTip = scanner.nextInt();
+        TipProdus tip = (optiuneTip == 1) ? TipProdus.rece : (optiuneTip == 2 ? TipProdus.cald : TipProdus.idc);
 
-                if(optiuneTip == 1 || optiuneTip == 2 || optiuneTip == 3) {
-                    AI_ALES_UN_NR_VALID = true;
-                }
-                else{
-                    System.out.println("Trebuie sa alegi un numar dintre optiunile listate!");
-                }
-
-            } while (!AI_ALES_UN_NR_VALID);
-
-            TipProdus tip = (optiuneTip == 1) ? TipProdus.rece : (optiuneTip == 2 ? TipProdus.cald : TipProdus.idc);
-
-            return new Produs(cost, nume, furnizor, tip);
-        } while(true);
+        return new Produs(cost, nume, furnizor, tip);
     }
 }

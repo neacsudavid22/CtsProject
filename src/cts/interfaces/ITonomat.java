@@ -15,4 +15,3 @@ public interface ITonomat {
     void filtrareProduseDupaFurnizor( String furnizor);
     void listareProduse();
 }
-
