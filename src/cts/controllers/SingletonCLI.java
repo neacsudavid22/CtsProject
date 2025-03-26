@@ -233,6 +233,7 @@ public class SingletonCLI {
         } while(raspuns != 5);
     }
     public void filtreazaProdusele(Scanner scanner, Tonomat tonomat){
+        scanner.nextLine();
         System.out.println("Introdu furnizorul: ");
         String furnizor = scanner.nextLine();
 
@@ -294,17 +295,19 @@ public class SingletonCLI {
         return listaId;
     }
     public Produs creazaProdusNou(Scanner scanner) {
+        scanner.nextLine();
         System.out.println("Introdu denumire Produs: ");
-        String nume = scanner.next();
+        String nume = scanner.nextLine();
 
         System.out.println("Introdu cost produs: ");
-        while(!scanner.hasNextDouble()){
+        while (!scanner.hasNextDouble()) {
             System.out.println("Introdu input valid!");
             scanner.next();
         }
         double cost = scanner.nextDouble();
+        scanner.nextLine();
 
-        System.out.println("Introdu furnizor");
+        System.out.println("Introdu furnizor:");
         String furnizor = scanner.nextLine();
 
         int optiuneTip;
@@ -321,11 +324,11 @@ public class SingletonCLI {
                 scanner.next();
             }
             optiuneTip = scanner.nextInt();
+            scanner.nextLine();
 
-            if(optiuneTip == 1 || optiuneTip == 2 || optiuneTip == 3) {
+            if (optiuneTip == 1 || optiuneTip == 2 || optiuneTip == 3) {
                 AI_ALES_UN_NR_VALID = true;
-            }
-            else{
+            } else {
                 System.out.println("Trebuie sa alegi un numar dintre optiunile listate!");
             }
 
@@ -335,4 +338,5 @@ public class SingletonCLI {
 
         return new Produs(cost, nume, furnizor, tip);
     }
+
 }
