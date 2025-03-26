@@ -1,16 +1,17 @@
 package cts.models;
 
+import cts.interfaces.ICompartiment;
 import cts.interfaces.ITonomat;
 
 public class Tonomat implements ITonomat {
     private static int count = 0;
     private int id;
-    private Compartiment compartiment;
+    private ICompartiment compartiment;
     private double sold;
     private String locatie;
     private static final SingletonContBancar contFirma = SingletonContBancar.getInstance();
 
-    public Tonomat(Compartiment compartiment, double sold, String locatie) {
+    public Tonomat(ICompartiment compartiment, double sold, String locatie) {
         this.id = count++;
         this.compartiment = compartiment;
         this.sold = sold;
@@ -25,7 +26,7 @@ public class Tonomat implements ITonomat {
         return id;
     }
 
-    public Compartiment getCompartiment() {
+    public ICompartiment getCompartiment() {
         return compartiment;
     }
 

@@ -1,6 +1,7 @@
 package cts.controllers;
 
 import cts.enums.TipProdus;
+import cts.interfaces.ICompartiment;
 import cts.models.*;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class SingletonCLI {
         }
     }
 
-    public void creazaTonomat(Compartiment compartiment, double sold, String locatie) {
+    public void creazaTonomat(ICompartiment compartiment, double sold, String locatie) {
         try {
             Tonomat tonomatNou = new Tonomat(compartiment, sold, locatie);
             listaTonomate.add(tonomatNou);
