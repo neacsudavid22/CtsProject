@@ -111,7 +111,12 @@ public class SingletonCLI {
         do{
             int idProdusSelectat = this.selecteazaProdus(scanner, tonomatCurent);
             ContBancar contClient = this.selecteazaContBancar(scanner);
-            tonomatCurent.vindeProdus(idProdusSelectat, contClient);
+            if(contClient != null){
+                tonomatCurent.vindeProdus(idProdusSelectat, contClient);
+            }
+            else{
+                System.out.println("Nu a fost selectat un cont valid");
+            }
 
             System.out.println("Vrei sa continui cumparaturile?");
             System.out.println("DA - Apasa 1");
