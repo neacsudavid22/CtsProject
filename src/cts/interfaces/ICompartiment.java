@@ -15,6 +15,4 @@ public interface ICompartiment {
     boolean verificaCapacitate();
     void listeaza();
     void filtreazaProduseleDupaFurnizor(String furnizor);
-    List<Produs> getListaProduse();
-    List<Integer> getIdProduse();
 }

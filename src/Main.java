@@ -1,7 +1,6 @@
 import cts.controllers.SingletonCLI;
 import cts.enums.TipCompartiment;
 import cts.enums.TipProdus;
-import cts.interfaces.ICompartiment;
 import cts.models.*;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class Main {
         List<Produs> listaProduse = new ArrayList<>();
         listaProduse.add(produs1); listaProduse.add(produs2); listaProduse.add(produs3);
 
-        ICompartiment compartiment = new Compartiment(listaProduse, 4, TipCompartiment.produseReci);
+        Compartiment compartiment = new Compartiment(listaProduse, 4, TipCompartiment.produseReci);
         CLI.creazaTonomat(compartiment, 1000, "Bucuresti");
 
         Produs produs4 = new Produs(10, "Ceai de tei", "Tea SRL", TipProdus.cald);
@@ -25,7 +24,7 @@ public class Main {
         List<Produs> listaProduse2 = new ArrayList<>();
         listaProduse2.add(produs4); listaProduse2.add(produs5); listaProduse2.add(produs6);
 
-        ICompartiment compartiment2 = new Compartiment(listaProduse2, 5, TipCompartiment.produseCalde);
+        Compartiment compartiment2 = new Compartiment(listaProduse2, 5, TipCompartiment.produseCalde);
         CLI.creazaTonomat(compartiment2, 1000, "Valcea");
 
         CLI.declanseazaCLI();
