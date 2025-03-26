@@ -229,7 +229,8 @@ public class SingletonCLI {
     }
     public void filtreazaProdusele(Scanner scanner, Tonomat tonomat){
         System.out.println("Introdu furnizorul: ");
-        String furnizor = scanner.next();
+        String furnizor = scanner.nextLine();
+
         System.out.println("Lista Produse a caror furnizor sunt " + furnizor + ":");
         tonomat.filtrareProduseDupaFurnizor(furnizor);
         System.out.println();
@@ -300,7 +301,6 @@ public class SingletonCLI {
 
         System.out.println("Introdu furnizor");
         String furnizor = scanner.nextLine();
-        scanner.next();
 
         int optiuneTip;
         boolean AI_ALES_UN_NR_VALID;
