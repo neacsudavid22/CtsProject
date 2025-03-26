@@ -12,7 +12,7 @@ public class Banca {
         this.listaConturiBancare = new ArrayList<>();
     }
     public ContBancar getContBancar(Scanner scanner) {
-        System.out.println("Introdu datele cardului: ");
+        System.out.println("Introdu datele cardului \n");
         String numar;
         do {
             System.out.println("Introdu numarul cardului: ");
@@ -21,7 +21,10 @@ public class Banca {
                 scanner.next();
             }
             numar = scanner.next();
-        } while(numar.matches("[0-9]") && numar.length() == 16);
+            if (!numar.matches("\\d{16}")) {
+                System.out.println("Număr invalid! Introdu un număr format din exact 16 cifre.");
+            }
+        } while(!numar.matches("\\d{16}"));
 
         String pin;
         do {
@@ -42,6 +45,7 @@ public class Banca {
             if(contBancar.getPin() == pin && contBancar.getNumar().equals(numar))
                 return contBancar;
         }
+        System.out.println("Nu exista un cont bancar cu datele furnizate.");
         return null;
     }
 
@@ -50,17 +54,11 @@ public class Banca {
 
         String proprietar;
         System.out.println("Introdu proprietarul cardului: ");
-        proprietar = scanner.nextLine();
+        proprietar = scanner.next();
 
-        String numar;
-        do {
-            System.out.println("Introdu numarul cardului: ");
-            numar = scanner.next();
-            if (!numar.matches("\\d{16}")) {
-                System.out.println("Număr invalid! Introdu un număr format din 16 cifre.");
-            }
-        } while (!numar.matches("\\d{16}"));
-
+        String numar = new String();
+        for(int i = 0; i < 4; i++)
+            numar += (int)((Math.random() * 9000) + 1000);
 
         int optiuneTip;
         do {
@@ -77,7 +75,8 @@ public class Banca {
         TipCardBancar tipCard = optiuneTip == 1 ? TipCardBancar.Mastercard : TipCardBancar.Visa;
 
         int pinCard = (int)(Math.random() * 9000) + 1000;
-
+        System.out.println("Pin-ul tau este: " + pinCard + ". Nu-l arata!");
+        System.out.println("Numarul cardului este: " + numar + ".");
         ContBancar contNou = new ContBancar(proprietar, numar, tipCard, pinCard);
         listaConturiBancare.add(contNou);
         System.out.println("Contul tau a fost adaugat: " + contNou.toString());
