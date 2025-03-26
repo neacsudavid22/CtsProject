@@ -8,7 +8,7 @@ public class Tonomat implements ITonomat {
     private Compartiment compartiment;
     private double sold;
     private String locatie;
-    public static SingletonContBancar contFirma = SingletonContBancar.getInstance();
+    private static final SingletonContBancar contFirma = SingletonContBancar.getInstance();
 
     public Tonomat(Compartiment compartiment, double sold, String locatie) {
         this.id = count++;
@@ -51,14 +51,9 @@ public class Tonomat implements ITonomat {
     }
 
     @Override
-    public void eliminaProdus(int idProdus) {
-        this.compartiment.elimina(idProdus);
-    }
-
-    @Override
     public void vindeProdus(int idProdus, ContBancar contBancar) {
         if(this.primirePlata(contBancar, this.compartiment.getCostProdus(idProdus))) {
-            this.eliminaProdus(idProdus);
+            this.compartiment.elimina(idProdus);
         }
         else System.out.println("Produsul nu a putut fi eliminat din Tonomat");
     }
@@ -83,7 +78,7 @@ public class Tonomat implements ITonomat {
     public void mutaProdus(int idProdus, Tonomat tonomat) {
         try{
             Produs produsMutat = this.compartiment.getProdusById(idProdus);
-            this.eliminaProdus(idProdus);
+            this.compartiment.elimina(idProdus);
             tonomat.adaugaProdus(produsMutat);
         } catch(Exception e){
             System.out.println(e.getMessage());

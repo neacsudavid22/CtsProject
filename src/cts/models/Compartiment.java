@@ -2,9 +2,9 @@ package cts.models;
 
 import cts.enums.TipCompartiment;
 import cts.enums.TipProdus;
-import cts.exceptions.CompartimentPlinException;
 import cts.interfaces.ICompartiment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Compartiment implements ICompartiment {
@@ -67,12 +67,25 @@ public class Compartiment implements ICompartiment {
 
     @Override
     public void elimina(int id) {
-        this.listaProduse.remove(id);
+        this.listaProduse.remove(this.getProdusById(id));
     }
     @Override
     public Produs getProdusById(int id){
-        return this.listaProduse.get(id);
+        for(Produs produs : this.listaProduse){
+            if(produs.getId() == id)
+                return produs;
+        }
+        return null;
     }
+    public List<Integer> getIdProduse(){
+        List<Integer> listId = new ArrayList<>();
+        for(Produs produs : this.listaProduse){
+            listId.add(produs.getId());
+        }
+        return listId;
+    }
+
+
 
     @Override
     public double getCostProdus(int id){
