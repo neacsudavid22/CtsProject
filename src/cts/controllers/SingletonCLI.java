@@ -299,7 +299,8 @@ public class SingletonCLI {
         double cost = scanner.nextDouble();
 
         System.out.println("Introdu furnizor");
-        String furnizor = scanner.next();
+        String furnizor = scanner.nextLine();
+        scanner.next();
 
         int optiuneTip;
         boolean AI_ALES_UN_NR_VALID;

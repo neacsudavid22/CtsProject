@@ -54,7 +54,8 @@ public class Banca {
 
         String proprietar;
         System.out.println("Introdu proprietarul cardului: ");
-        proprietar = scanner.next();
+        proprietar = scanner.nextLine();
+        scanner.next();
 
         String numar = new String();
         for(int i = 0; i < 4; i++)
