@@ -62,8 +62,8 @@ public class Produs {
     public String toString() {
         return "id: " + id +
                 ", cost: " + cost +
-                ", nume: '" + nume +
-                ", furnizor: '" + furnizor +
+                ", nume: " + nume +
+                ", furnizor: " + furnizor +
                 ", tip: " + tip + "\n";
     }
 }
