@@ -7,15 +7,26 @@ import cts.interfaces.IContBancar;
 public class ContBancar implements IContBancar {
     private static int count = 0;
     private int id;
-    private String nume;
+    private String proprietar;
+    private String numar;
     private double sold;
     private TipCardBancar tip;
+    private int pin;
 
-    public ContBancar(String nume, double sold, TipCardBancar tip) {
+    public ContBancar(String proprietar, String numar, TipCardBancar tip, int pin) {
         this.id = count++;
-        this.nume = nume;
-        this.sold = sold;
+        this.proprietar = proprietar;
+        this.numar = numar;
+        this.sold = 100;
         this.tip = tip;
+        this.pin = pin;
+    }
+    public int getPin() {
+        return pin;
+    }
+
+    public String getNumar() {
+        return numar;
     }
 
     public static int getCount() {
@@ -26,13 +37,12 @@ public class ContBancar implements IContBancar {
         return id;
     }
 
-
-    public String getNume() {
-        return nume;
+    public String getProprietar() {
+        return proprietar;
     }
 
-    public void setNume(String nume) {
-        this.nume = nume;
+    public void setProprietar(String nume) {
+        this.proprietar = nume;
     }
 
     public double getSold() {
@@ -57,22 +67,9 @@ public class ContBancar implements IContBancar {
             this.sold -= cost;
             return true;
         }
-        try {
-            throw new SoldInsuficientException();
-        } catch (SoldInsuficientException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("Sold insuficient, nu s-a putut efectua plata.");
+        return false;
     }
-
-        //@Override
-        //public Boolean platesteProdus(double cost) {
-        //if (this.sold >= cost) {
-        //this.sold -= cost;
-        //return true;
-        //}
-        //System.out.println("Sold insuficient, nu s-a putut efectua plata.");
-        //return false;
-        //}
 
     @Override
     public Boolean colectareSuma(double suma) {
@@ -87,7 +84,8 @@ public class ContBancar implements IContBancar {
     public String toString() {
         return "ContBancar{" +
                 "id=" + id +
-                ", nume='" + nume + '\'' +
+                ", proprietar='" + proprietar + '\'' +
+                ", numar=" + numar +
                 ", sold=" + sold +
                 ", tip=" + tip +
                 '}';

@@ -9,7 +9,7 @@ public class SingletonContBancar implements ISingletonContBancar, IContBancar {
     private ContBancar contBancar;
 
     private SingletonContBancar() {
-        this.contBancar = new ContBancar("Familia Papadocviolentziu", 100.0, TipCardBancar.Visa);
+        this.contBancar = new ContBancar("Familia Papadocviolentziu", "4000400040004000", TipCardBancar.Visa, 1234);
     }
 
     public static synchronized SingletonContBancar getInstance() {
@@ -23,7 +23,6 @@ public class SingletonContBancar implements ISingletonContBancar, IContBancar {
     public ContBancar getContBancar() {
         return contBancar;
     }
-
 
     @Override
     public Boolean platesteProdus(double cost) {
