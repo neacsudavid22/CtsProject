@@ -1,12 +1,13 @@
 package cts.models;
 
 import cts.enums.TipCardBancar;
+import cts.interfaces.IBanca;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Banca {
+public class Banca implements IBanca {
     private List<ContBancar> listaConturiBancare;
     public Banca() {
         this.listaConturiBancare = new ArrayList<>();
@@ -40,7 +41,8 @@ public class Banca {
         return this.cautaCont(pinCard, numar);
     }
 
-    private ContBancar cautaCont(int pin, String numar){
+    @Override
+    public ContBancar cautaCont(int pin, String numar){
         for(ContBancar contBancar : this.listaConturiBancare){
             if(contBancar.getPin() == pin && contBancar.getNumar().equals(numar))
                 return contBancar;
@@ -49,6 +51,7 @@ public class Banca {
         return null;
     }
 
+    @Override
     public ContBancar creazaContBancar(Scanner scanner){
         System.out.println("Introdu datele contului bancar pentru a efectua plata: ");
 

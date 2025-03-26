@@ -1,16 +1,18 @@
 package cts.interfaces;
 
 import cts.models.Produs;
+import cts.enums.TipProdus;
+import cts.enums.TipCompartiment;
 
 import java.util.List;
 
 public interface ICompartiment {
     boolean adauga(Produs produs);
     void elimina(int id);
-    boolean verificaTip(Produs produs);
-    void listeaza();
-    void filtreazaProduseleDupaFurnizor(String furnizor);
-    boolean verificaCapacitate();
     Produs getProdusById(int id);
     double getCostProdus(int id);
+    boolean verificaTip(Produs produs);
+    boolean verificaCapacitate();
+    void listeaza();
+    void filtreazaProduseleDupaFurnizor(String furnizor);
 }
