@@ -22,6 +22,7 @@ public class Banca {
             }
             numar = scanner.next();
         } while(numar.matches("[0-9]") && numar.length() == 16);
+
         String pin;
         do {
             System.out.println("Introdu pin-ul cardului: ");
@@ -48,22 +49,18 @@ public class Banca {
         System.out.println("Introdu datele contului bancar pentru a efectua plata: ");
 
         String proprietar;
-        System.out.println("Introdu numarul cardului: ");
-        while (!scanner.hasNext()) {
-            System.out.println("Introdu un numar de card valid!");
-            scanner.next();
-        }
-        proprietar = scanner.next();
+        System.out.println("Introdu proprietarul cardului: ");
+        proprietar = scanner.nextLine();
 
         String numar;
         do {
             System.out.println("Introdu numarul cardului: ");
-            while (!scanner.hasNext()) {
-                System.out.println("Introdu un numar de card valid!");
-                scanner.next();
-            }
             numar = scanner.next();
-        } while(numar.matches("[0-9]") && numar.length() == 16);
+            if (!numar.matches("\\d{16}")) {
+                System.out.println("Număr invalid! Introdu un număr format din 16 cifre.");
+            }
+        } while (!numar.matches("\\d{16}"));
+
 
         int optiuneTip;
         do {
@@ -75,15 +72,12 @@ public class Banca {
                 scanner.next();
             }
             optiuneTip = scanner.nextInt();
-        } while(optiuneTip != 1 || optiuneTip != 2);
+
+        } while(optiuneTip != 1 && optiuneTip != 2);
         TipCardBancar tipCard = optiuneTip == 1 ? TipCardBancar.Mastercard : TipCardBancar.Visa;
 
-        int pinCard = Integer.parseInt(
-                Double.toString(
-                        Math.round(Math.random()) * 1000 + Math.round(Math.random()) * 100 +
-                        Math.round(Math.random()) * 10 + Math.round(Math.random())
-                )
-        );
+        int pinCard = (int)(Math.random() * 9000) + 1000;
+
         ContBancar contNou = new ContBancar(proprietar, numar, tipCard, pinCard);
         listaConturiBancare.add(contNou);
         System.out.println("Contul tau a fost adaugat: " + contNou.toString());

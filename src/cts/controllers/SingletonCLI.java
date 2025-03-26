@@ -63,8 +63,10 @@ public class SingletonCLI {
             }
             raspuns = scanner.nextInt();
 
-            if (raspuns == 1 || raspuns == 2)
-                this.lanseazaMeniu(scanner, Boolean.parseBoolean(Integer.toString(raspuns-1)));
+            if (raspuns == 1 || raspuns == 2) {
+                boolean ESTE_MANAGER = raspuns == 2;
+                this.lanseazaMeniu(scanner, ESTE_MANAGER);
+            }
             else if(raspuns != 3)
                 System.out.println("Introdu un numar dintre optiunile disponibile");
 
@@ -92,6 +94,7 @@ public class SingletonCLI {
                         this.administreazaTonomat(tonomatCurent, scanner);
                     else
                         this.cumparaProdus(tonomatCurent, scanner);
+                    break;
                 }
                 case 2: {
                     System.out.println("EXIT");
@@ -108,13 +111,13 @@ public class SingletonCLI {
         int raspuns;
         do{
             int idProdusSelectat = this.selecteazaProdus(scanner, tonomatCurent);
-            Produs produsSelectat = tonomatCurent.getCompartiment().getProdusById(idProdusSelectat);
             ContBancar contClient = this.selecteazaContBancar(scanner);
-            tonomatCurent.primirePlata(contClient, produsSelectat.getCost());
+            tonomatCurent.vindeProdus(idProdusSelectat, contClient);
 
             System.out.println("Vrei sa continui cumparaturile?");
             System.out.println("DA - Apasa 1");
             System.out.println("NU - Apasa alt NUMAR");
+
             while(!scanner.hasNextInt()){
                 System.out.println("Invalid input!");
                 scanner.next();
@@ -237,7 +240,7 @@ public class SingletonCLI {
         do {
             AI_ALES_UN_NR_VALID = false;
             this.listezaTonomatele();
-            while (scanner.hasNextInt()) {
+            while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
                 scanner.next();
             }
@@ -254,7 +257,6 @@ public class SingletonCLI {
     }
 
     public Tonomat selecteazaTonomat(Scanner scanner){
-        System.out.println("Selecteaza tonomatul:");
         int idTonomat;
         boolean AI_ALES_UN_NR_VALID;
         do {

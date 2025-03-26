@@ -71,6 +71,7 @@ public class Tonomat implements ITonomat {
         }
         if (contBancar.platesteProdus(cost)) {
             contFirma.colectareSuma(cost);
+
             System.out.println("Plată efectuată cu succes.");
             return true;
         }
