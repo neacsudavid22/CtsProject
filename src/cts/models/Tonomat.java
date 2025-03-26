@@ -78,8 +78,10 @@ public class Tonomat implements ITonomat {
     public void mutaProdus(int idProdus, Tonomat tonomat) {
         try{
             Produs produsMutat = this.compartiment.getProdusById(idProdus);
-            this.compartiment.elimina(idProdus);
-            tonomat.adaugaProdus(produsMutat);
+
+            if(tonomat.adaugaProdus(produsMutat))
+                this.compartiment.elimina(idProdus);
+
         } catch(Exception e){
             System.out.println(e.getMessage());
         }

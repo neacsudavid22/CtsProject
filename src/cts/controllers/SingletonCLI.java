@@ -206,7 +206,6 @@ public class SingletonCLI {
 
                     tonomatCurent.mutaProdus(idProdusDeMutat, tonomatPentruMutat);
 
-                    System.out.println("Produsul a fost mutat!");
                     break;
                 }
                 case 3: {
