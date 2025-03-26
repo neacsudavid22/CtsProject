@@ -48,7 +48,6 @@ public class SingletonCLI {
         }
     }
 
-
     public void declanseazaCLI() {
         Scanner scanner = new Scanner(System.in);
         int raspuns;
@@ -142,7 +141,11 @@ public class SingletonCLI {
 
             switch (raspuns) {
                 case 1 : {
-                    return this.banca.getContBancar(scanner);
+                    ContBancar contBancar = this.banca.getContBancar(scanner);
+                    if(contBancar != null)
+                        return contBancar;
+                    raspuns = 4;
+                    break;
                 }
                 case 2: {
                     ContBancar contBancar = this.banca.creazaContBancar(scanner);
@@ -239,13 +242,12 @@ public class SingletonCLI {
         boolean AI_ALES_UN_NR_VALID;
         do {
             AI_ALES_UN_NR_VALID = false;
-            this.listezaTonomatele();
             while (!scanner.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
                 scanner.next();
             }
             idProdus = scanner.nextInt();
-            if(idProdus >= 0 && idProdus < tonomatCurent.getCompartiment().getListaProduse().size()) {
+            if(tonomatCurent.getCompartiment().getIdProduse().contains(idProdus)) {
                 AI_ALES_UN_NR_VALID = true;
             }
             else{
@@ -267,7 +269,7 @@ public class SingletonCLI {
                 scanner.next();
             }
             idTonomat = scanner.nextInt();
-            if(idTonomat >= 0 && idTonomat < this.listaTonomate.size()) {
+            if(this.getTonomateId().contains(idTonomat)) {
                 AI_ALES_UN_NR_VALID = true;
             }
             else{
@@ -279,6 +281,13 @@ public class SingletonCLI {
         return this.getTonomatById(idTonomat);
     }
 
+    public List<Integer> getTonomateId(){
+        List<Integer> listaId = new ArrayList<>();
+        for(Tonomat tonomat : this.listaTonomate){
+            listaId.add(tonomat.getId());
+        }
+        return listaId;
+    }
     public Produs creazaProdusNou(Scanner scanner) {
         System.out.println("Introdu denumire Produs: ");
         String nume = scanner.next();

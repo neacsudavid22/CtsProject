@@ -11,7 +11,6 @@ public interface ITonomat {
     boolean primirePlata( ContBancar contBancar, double cost);
     void mutaProdus(int idProdus, Tonomat tonomat);
     boolean adaugaProdus( Produs produs);
-    void eliminaProdus( int idProdus);
     void filtrareProduseDupaFurnizor( String furnizor);
     void listareProduse();
 }
